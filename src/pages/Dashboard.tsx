@@ -6,6 +6,7 @@ import { Plus } from "lucide-react";
 import { TaskForm } from "@/components/TaskForm";
 import { TaskList } from "@/components/TaskList";
 import { ReminderBanner } from "@/components/ReminderBanner";
+import { Header } from "@/components/Header";
 import { Task } from "@/types/task";
 import { toast } from "sonner";
 
@@ -46,37 +47,41 @@ export function Dashboard() {
   };
   
   return (
-    <div className="container py-6 md:py-10 max-w-6xl">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Progress Pulse</h1>
-          <p className="text-muted-foreground mt-1">
-            Track your tasks with smart reminders
-          </p>
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      
+      <div className="container py-6 md:py-10 max-w-6xl">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Your Tasks</h1>
+            <p className="text-muted-foreground mt-1">
+              Track your tasks with smart reminders
+            </p>
+          </div>
+          
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="mt-4 sm:mt-0">
+                <Plus className="w-4 h-4 mr-2" />
+                Add New Task
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[500px]">
+              <DialogHeader>
+                <DialogTitle>Create a new task</DialogTitle>
+              </DialogHeader>
+              <TaskForm 
+                onSubmit={handleAddTask} 
+                onCancel={() => setIsDialogOpen(false)} 
+              />
+            </DialogContent>
+          </Dialog>
         </div>
         
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="mt-4 sm:mt-0">
-              <Plus className="w-4 h-4 mr-2" />
-              Add New Task
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-              <DialogTitle>Create a new task</DialogTitle>
-            </DialogHeader>
-            <TaskForm 
-              onSubmit={handleAddTask} 
-              onCancel={() => setIsDialogOpen(false)} 
-            />
-          </DialogContent>
-        </Dialog>
+        <ReminderBanner tasks={tasks} />
+        
+        <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
       </div>
-      
-      <ReminderBanner tasks={tasks} />
-      
-      <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
     </div>
   );
 }
