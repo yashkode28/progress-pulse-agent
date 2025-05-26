@@ -55,7 +55,7 @@ export function Dashboard() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Your Tasks</h1>
             <p className="text-muted-foreground mt-1">
-              Track your tasks with smart reminders
+              Your AI assistant to track progress, so you don't have to
             </p>
           </div>
           
