@@ -92,7 +92,7 @@ export default function Auth() {
             Progress Pulse
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Track your tasks with smart reminders
+            Your AI assistant to track progress, so you don't have to
           </p>
         </div>
         
