@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -92,14 +93,15 @@ export default function Auth() {
           Progress Pulse
         </h1>
         <div className="overflow-hidden">
-          <p className="text-2xl text-black animate-[slide-in-right_2s_ease-out]">
+          <p className="text-2xl text-black animate-[slide-in-left_2s_ease-out]">
             Your AI assistant to track progress, so you don't have to
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-16">
-        {/* Full Pulse AI Notifications Image */}
+      {/* Images and Text Section */}
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-8 mb-16">
+        {/* Left Image - Pulse AI Notifications */}
         <div className="flex-shrink-0">
           <img 
             src="/lovable-uploads/863df263-7457-40b9-a624-16ca691f1dbe.png"
@@ -108,104 +110,121 @@ export default function Auth() {
           />
         </div>
 
-        {/* Authentication Form */}
-        <div className="max-w-md w-full">
-          <Card>
-            <Tabs defaultValue="signin" className="w-full">
-              <CardHeader>
-                <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="signin">Sign In</TabsTrigger>
-                  <TabsTrigger value="signup">Sign Up</TabsTrigger>
-                </TabsList>
-              </CardHeader>
-              
-              <CardContent>
-                <TabsContent value="signin">
-                  <form onSubmit={handleSignIn} className="space-y-4">
-                    <CardTitle className="text-black">Welcome back</CardTitle>
-                    <CardDescription className="text-black/80">
-                      Sign in to your account to continue
-                    </CardDescription>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="signin-email" className="text-black">Email</Label>
-                      <Input
-                        id="signin-email"
-                        name="signin-email"
-                        type="email"
-                        required
-                        placeholder="Enter your email"
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="signin-password" className="text-black">Password</Label>
-                      <Input
-                        id="signin-password"
-                        name="signin-password"
-                        type="password"
-                        required
-                        placeholder="Enter your password"
-                      />
-                    </div>
-                    
-                    <Button type="submit" className="w-full" disabled={loading}>
-                      {loading ? "Signing in..." : "Sign In"}
-                    </Button>
-                  </form>
-                </TabsContent>
-                
-                <TabsContent value="signup">
-                  <form onSubmit={handleSignUp} className="space-y-4">
-                    <CardTitle className="text-black">Create account</CardTitle>
-                    <CardDescription className="text-black/80">
-                      Sign up to start tracking your progress
-                    </CardDescription>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="text-black">Name</Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        type="text"
-                        required
-                        placeholder="Enter your full name"
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-email" className="text-black">Email</Label>
-                      <Input
-                        id="signup-email"
-                        name="signup-email"
-                        type="email"
-                        required
-                        placeholder="Enter your email"
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="signup-password" className="text-black">Password</Label>
-                      <Input
-                        id="signup-password"
-                        name="signup-password"
-                        type="password"
-                        required
-                        placeholder="Create a password"
-                        minLength={6}
-                      />
-                    </div>
-                    
-                    <Button type="submit" className="w-full" disabled={loading}>
-                      {loading ? "Creating account..." : "Sign Up"}
-                    </Button>
-                  </form>
-                </TabsContent>
-              </CardContent>
-            </Tabs>
-          </Card>
+        {/* Middle Text */}
+        <div className="flex-1 text-center px-8">
+          <p className="text-xl text-black leading-relaxed">
+            How does it work? Simple. Give me your tasks to complete, how long each task will take, and their deadlines. I'll create a plan for completing each task with scheduled reminders, so you don't burn out or feel like you forgot to do something!
+          </p>
         </div>
+
+        {/* Right Image - Woman with Dog */}
+        <div className="flex-shrink-0">
+          <img 
+            src="/lovable-uploads/075ae1f4-9120-4fcc-b661-ae7e62ef3fc3.png"
+            alt="Woman receiving notifications while walking dog"
+            className="rounded-lg shadow-lg w-96 h-auto object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Authentication Form at Bottom */}
+      <div className="max-w-md mx-auto">
+        <Card>
+          <Tabs defaultValue="signin" className="w-full">
+            <CardHeader>
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="signin">Sign In</TabsTrigger>
+                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              </TabsList>
+            </CardHeader>
+            
+            <CardContent>
+              <TabsContent value="signin">
+                <form onSubmit={handleSignIn} className="space-y-4">
+                  <CardTitle className="text-black">Welcome back</CardTitle>
+                  <CardDescription className="text-black/80">
+                    Sign in to your account to continue
+                  </CardDescription>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="signin-email" className="text-black">Email</Label>
+                    <Input
+                      id="signin-email"
+                      name="signin-email"
+                      type="email"
+                      required
+                      placeholder="Enter your email"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="signin-password" className="text-black">Password</Label>
+                    <Input
+                      id="signin-password"
+                      name="signin-password"
+                      type="password"
+                      required
+                      placeholder="Enter your password"
+                    />
+                  </div>
+                  
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? "Signing in..." : "Sign In"}
+                  </Button>
+                </form>
+              </TabsContent>
+              
+              <TabsContent value="signup">
+                <form onSubmit={handleSignUp} className="space-y-4">
+                  <CardTitle className="text-black">Create account</CardTitle>
+                  <CardDescription className="text-black/80">
+                    Sign up to start tracking your progress
+                  </CardDescription>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-black">Name</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-email" className="text-black">Email</Label>
+                    <Input
+                      id="signup-email"
+                      name="signup-email"
+                      type="email"
+                      required
+                      placeholder="Enter your email"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-password" className="text-black">Password</Label>
+                    <Input
+                      id="signup-password"
+                      name="signup-password"
+                      type="password"
+                      required
+                      placeholder="Create a password"
+                      minLength={6}
+                    />
+                  </div>
+                  
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? "Creating account..." : "Sign Up"}
+                  </Button>
+                </form>
+              </TabsContent>
+            </CardContent>
+          </Tabs>
+        </Card>
       </div>
     </div>
   );
 }
+
