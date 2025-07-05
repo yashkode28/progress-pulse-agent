@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -94,12 +95,23 @@ export default {
 						transform: 'translateX(0)',
 						opacity: '1'
 					}
+				},
+				'slide-in-left': {
+					'0%': { 
+						transform: 'translateX(100%)',
+						opacity: '0'
+					},
+					'100%': { 
+						transform: 'translateX(0)',
+						opacity: '1'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'slide-in-right': 'slide-in-right 2s ease-out'
+				'slide-in-right': 'slide-in-right 2s ease-out',
+				'slide-in-left': 'slide-in-left 2s ease-out'
 			}
 		}
 	},
