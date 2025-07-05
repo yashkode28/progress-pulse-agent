@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -85,58 +84,31 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#B19CD9' }}>
-      <div className="max-w-6xl w-full flex items-center justify-between gap-16">
-        {/* Pulse AI Notifications */}
-        <div className="flex flex-col space-y-4 max-w-sm">
-          <div className="bg-blue-600 text-white p-4 rounded-lg shadow-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-6 h-6 bg-white rounded flex items-center justify-center">
-                <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="font-semibold">Pulse AI</span>
-            </div>
-            <p className="font-semibold">40% of production stage complete</p>
-          </div>
-          
-          <div className="bg-blue-600 text-white p-4 rounded-lg shadow-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-6 h-6 bg-white rounded flex items-center justify-center">
-                <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="font-semibold">Pulse AI</span>
-            </div>
-            <p className="font-semibold">Pack for vacation 3 days from now</p>
-          </div>
-          
-          <div className="bg-blue-600 text-white p-4 rounded-lg shadow-lg">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-6 h-6 bg-white rounded flex items-center justify-center">
-                <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="font-semibold">Pulse AI</span>
-            </div>
-            <p className="font-semibold">Gym in 20 minutes</p>
-          </div>
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#B19CD9' }}>
+      {/* Centered Main Title and Subtitle */}
+      <div className="text-center mb-12">
+        <h1 className="text-6xl font-bold text-black mb-6">
+          Progress Pulse
+        </h1>
+        <div className="overflow-hidden">
+          <p className="text-2xl text-black animate-[slide-in-right_2s_ease-out]">
+            Your AI assistant to track progress, so you don't have to
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-16">
+        {/* Full Pulse AI Notifications Image */}
+        <div className="flex-shrink-0">
+          <img 
+            src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=500&h=600&fit=crop"
+            alt="AI Assistant Notifications"
+            className="rounded-lg shadow-lg w-96 h-auto object-cover"
+          />
         </div>
 
         {/* Authentication Form */}
-        <div className="max-w-md w-full space-y-8">
-          <div className="text-center">
-            <h2 className="mt-6 text-3xl font-bold text-black">
-              Progress Pulse
-            </h2>
-            <p className="mt-2 text-sm text-black/80">
-              Your AI assistant to track progress, so you don't have to
-            </p>
-          </div>
-          
+        <div className="max-w-md w-full">
           <Card>
             <Tabs defaultValue="signin" className="w-full">
               <CardHeader>
@@ -149,13 +121,13 @@ export default function Auth() {
               <CardContent>
                 <TabsContent value="signin">
                   <form onSubmit={handleSignIn} className="space-y-4">
-                    <CardTitle>Welcome back</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-black">Welcome back</CardTitle>
+                    <CardDescription className="text-black/80">
                       Sign in to your account to continue
                     </CardDescription>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="signin-email">Email</Label>
+                      <Label htmlFor="signin-email" className="text-black">Email</Label>
                       <Input
                         id="signin-email"
                         name="signin-email"
@@ -166,7 +138,7 @@ export default function Auth() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="signin-password">Password</Label>
+                      <Label htmlFor="signin-password" className="text-black">Password</Label>
                       <Input
                         id="signin-password"
                         name="signin-password"
@@ -184,13 +156,13 @@ export default function Auth() {
                 
                 <TabsContent value="signup">
                   <form onSubmit={handleSignUp} className="space-y-4">
-                    <CardTitle>Create account</CardTitle>
-                    <CardDescription>
+                    <CardTitle className="text-black">Create account</CardTitle>
+                    <CardDescription className="text-black/80">
                       Sign up to start tracking your progress
                     </CardDescription>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
+                      <Label htmlFor="name" className="text-black">Name</Label>
                       <Input
                         id="name"
                         name="name"
@@ -201,7 +173,7 @@ export default function Auth() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="signup-email">Email</Label>
+                      <Label htmlFor="signup-email" className="text-black">Email</Label>
                       <Input
                         id="signup-email"
                         name="signup-email"
@@ -212,7 +184,7 @@ export default function Auth() {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="signup-password">Password</Label>
+                      <Label htmlFor="signup-password" className="text-black">Password</Label>
                       <Input
                         id="signup-password"
                         name="signup-password"
