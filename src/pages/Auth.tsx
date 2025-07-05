@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -101,8 +102,8 @@ export default function Auth() {
         {/* Full Pulse AI Notifications Image */}
         <div className="flex-shrink-0">
           <img 
-            src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=500&h=600&fit=crop"
-            alt="AI Assistant Notifications"
+            src="/lovable-uploads/863df263-7457-40b9-a624-16ca691f1dbe.png"
+            alt="Pulse AI Assistant Notifications"
             className="rounded-lg shadow-lg w-96 h-auto object-cover"
           />
         </div>
