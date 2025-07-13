@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -20,7 +21,9 @@ export function Header() {
     <header className="border-b bg-white">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <div className="flex items-center space-x-2">
-          <h1 className="text-xl font-bold">Progress Pulse</h1>
+          <Link to="/" className="text-xl font-bold hover:text-gray-700 transition-colors">
+            Progress Pulse
+          </Link>
         </div>
         
         {user && (
