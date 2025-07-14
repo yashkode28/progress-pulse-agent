@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -86,8 +86,23 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#B19CD9' }}>
-      {/* Centered Main Title and Subtitle */}
+    <div className="min-h-screen" style={{ backgroundColor: '#B19CD9' }}>
+      {/* Header */}
+      <header className="border-b bg-white/10">
+        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+          <Link to="/" className="text-xl font-bold text-black hover:text-black/70 transition-colors">
+            Progress Pulse
+          </Link>
+          <Link to="/" className="text-black hover:text-black/70 transition-colors">
+            <Button variant="outline" size="sm" className="border-black/20 text-black hover:bg-black/10">
+              Your Tasks
+            </Button>
+          </Link>
+        </div>
+      </header>
+
+      <div className="py-12 px-4 sm:px-6 lg:px-8">
+        {/* Centered Main Title and Subtitle */}
       <div className="text-center mb-12">
         <h1 className="text-6xl font-bold text-black mb-6">
           Progress Pulse
@@ -223,6 +238,7 @@ export default function Auth() {
             </CardContent>
           </Tabs>
         </Card>
+      </div>
       </div>
     </div>
   );
