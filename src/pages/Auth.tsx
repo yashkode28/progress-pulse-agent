@@ -114,22 +114,24 @@ export default function Auth() {
         </div>
       </div>
 
-      {/* Images and Text Section */}
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-8 mb-16">
+      {/* Images Section */}
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-8 mb-8">
         {/* Left Image - Pulse AI Notifications */}
         <div className="flex-shrink-0">
           <img 
             src="/lovable-uploads/863df263-7457-40b9-a624-16ca691f1dbe.png"
             alt="Pulse AI Assistant Notifications"
-            className="rounded-lg shadow-lg w-96 h-auto object-cover"
+            className="rounded-lg shadow-lg w-80 h-auto object-cover"
           />
         </div>
 
-        {/* Middle Text */}
-        <div className="flex-1 text-center px-8">
-          <p className="text-xl text-black leading-relaxed">
-            How does it work? Simple. Give me your tasks to complete, how long each task will take, and their deadlines. I'll create a plan for completing each task with scheduled reminders, so you don't burn out or feel like you forgot to do something!
-          </p>
+        {/* Middle Image - Athlete/Hiker */}
+        <div className="flex-shrink-0">
+          <img 
+            src="/lovable-uploads/7bcebda3-6793-4d6a-9e98-73ba99fcf0a8.png"
+            alt="Person hiking with gear"
+            className="rounded-lg shadow-lg w-80 h-auto object-cover"
+          />
         </div>
 
         {/* Right Image - Woman with Dog */}
@@ -137,9 +139,16 @@ export default function Auth() {
           <img 
             src="/lovable-uploads/075ae1f4-9120-4fcc-b661-ae7e62ef3fc3.png"
             alt="Woman receiving notifications while walking dog"
-            className="rounded-lg shadow-lg w-96 h-auto object-cover"
+            className="rounded-lg shadow-lg w-80 h-auto object-cover"
           />
         </div>
+      </div>
+
+      {/* Text Section */}
+      <div className="max-w-4xl mx-auto text-center mb-16">
+        <p className="text-xl text-black leading-relaxed">
+          How does it work? Simple. Give me your tasks to complete, how long each task will take, and their deadlines. I'll create a plan for completing each task with scheduled reminders, so you don't burn out or feel like you forgot to do something!
+        </p>
       </div>
 
       {/* Authentication Form at Bottom */}
