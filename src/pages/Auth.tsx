@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { useNavigate, Link } from "react-router-dom";
+import { ChecklistAnimation } from "@/components/ChecklistAnimation";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -151,9 +152,16 @@ export default function Auth() {
         </h2>
       </div>
 
-      {/* Authentication Form at Bottom */}
-      <div className="max-w-md mx-auto">
-        <Card>
+      {/* Authentication Section with Checklist */}
+      <div className="max-w-6xl mx-auto flex items-center justify-center gap-12">
+        {/* Animated Checklist */}
+        <div className="flex-shrink-0">
+          <ChecklistAnimation />
+        </div>
+
+        {/* Authentication Form */}
+        <div className="w-96">
+          <Card>
           <Tabs defaultValue="signin" className="w-full">
             <CardHeader>
               <TabsList className="grid w-full grid-cols-2">
@@ -246,7 +254,8 @@ export default function Auth() {
               </TabsContent>
             </CardContent>
           </Tabs>
-        </Card>
+          </Card>
+        </div>
       </div>
       </div>
     </div>
