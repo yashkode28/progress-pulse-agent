@@ -146,9 +146,9 @@ export default function Auth() {
 
       {/* Text Section */}
       <div className="max-w-4xl mx-auto text-center mb-16">
-        <p className="text-xl text-black leading-relaxed">
+        <h2 className="text-3xl font-bold text-black leading-relaxed">
           How does it work? Simple. Give me your tasks to complete, how long each task will take, and their deadlines. I'll create a plan for completing each task with scheduled reminders, so you don't burn out or feel like you forgot to do something!
-        </p>
+        </h2>
       </div>
 
       {/* Authentication Form at Bottom */}
