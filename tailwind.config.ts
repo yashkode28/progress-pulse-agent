@@ -117,11 +117,11 @@ export default {
 					}
 				},
 				'flash-glow': {
-					'0%, 100%': { 
-						opacity: '0' 
-					},
-					'10%, 90%': { 
+					'0%, 50%': { 
 						opacity: '1' 
+					},
+					'50.01%, 100%': { 
+						opacity: '0' 
 					}
 				}
 			},
@@ -131,7 +131,7 @@ export default {
 				'slide-in-right': 'slide-in-right 2s ease-out',
 				'slide-in-left': 'slide-in-left 2s ease-out',
 				'fade-in-delayed': 'fade-in-delayed 1s ease-out 1s forwards',
-				'flash-glow': 'flash-glow 3s ease-in-out infinite'
+				'flash-glow': 'flash-glow 6s ease-in-out infinite'
 			}
 		}
 	},
