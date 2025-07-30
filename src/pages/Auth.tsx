@@ -116,9 +116,9 @@ export default function Auth() {
       </div>
 
       {/* Images Section */}
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-8 mb-8">
+      <div className="max-w-7xl mx-auto flex items-end justify-center gap-12 mb-8">
         {/* Left Image - Pulse AI Notifications */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 -translate-x-8">
           <img 
             src="/lovable-uploads/863df263-7457-40b9-a624-16ca691f1dbe.png"
             alt="Pulse AI Assistant Notifications"
@@ -131,12 +131,12 @@ export default function Auth() {
           <img 
             src="/lovable-uploads/7bcebda3-6793-4d6a-9e98-73ba99fcf0a8.png"
             alt="Person hiking with gear"
-            className="rounded-lg shadow-lg w-80 h-auto object-cover"
+            className="rounded-lg shadow-lg h-80 w-auto object-cover"
           />
         </div>
 
         {/* Right Image - Woman with Dog */}
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 translate-x-8">
           <img 
             src="/lovable-uploads/075ae1f4-9120-4fcc-b661-ae7e62ef3fc3.png"
             alt="Woman receiving notifications while walking dog"
