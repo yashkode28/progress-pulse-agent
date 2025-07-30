@@ -118,12 +118,10 @@ export default {
 				},
 				'flash-glow': {
 					'0%, 100%': { 
-						opacity: '1', 
-						textShadow: '0 0 10px rgb(255, 215, 0)' 
+						opacity: '0' 
 					},
-					'50%': { 
-						opacity: '0.7', 
-						textShadow: '0 0 20px rgb(255, 215, 0), 0 0 30px rgb(255, 223, 0)' 
+					'10%, 90%': { 
+						opacity: '1' 
 					}
 				}
 			},

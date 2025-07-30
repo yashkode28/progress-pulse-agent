@@ -129,8 +129,13 @@ export default function Auth() {
         {/* Middle Image - Athlete/Hiker with animated text */}
         <div className="flex-shrink-0 flex flex-col items-center">
           {/* Animated "Keep Progressing" text */}
-          <div className="opacity-0 animate-fade-in-delayed mb-4">
-            <h3 className="text-2xl font-bold text-yellow-400 border-2 border-red-800 px-4 py-2 rounded-lg bg-black/20 animate-flash-glow">
+          <div className="mb-4">
+            <h3 
+              className="text-5xl font-bold text-yellow-400 animate-flash-glow"
+              style={{
+                WebkitTextStroke: '2px #8B0000'
+              } as React.CSSProperties}
+            >
               Keep Progressing
             </h3>
           </div>
