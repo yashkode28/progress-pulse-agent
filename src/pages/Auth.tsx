@@ -116,7 +116,7 @@ export default function Auth() {
       </div>
 
       {/* Images Section */}
-      <div className="max-w-7xl mx-auto flex items-end justify-center gap-12 mb-8">
+      <div className="max-w-7xl mx-auto flex items-end justify-center gap-12 mb-8 relative">
         {/* Left Image - Pulse AI Notifications */}
         <div className="flex-shrink-0 -translate-x-8">
           <img 
@@ -126,8 +126,14 @@ export default function Auth() {
           />
         </div>
 
-        {/* Middle Image - Athlete/Hiker */}
-        <div className="flex-shrink-0">
+        {/* Middle Image - Athlete/Hiker with animated text */}
+        <div className="flex-shrink-0 flex flex-col items-center">
+          {/* Animated "Keep Progressing" text */}
+          <div className="opacity-0 animate-fade-in-delayed mb-4">
+            <h3 className="text-2xl font-bold text-yellow-400 border-2 border-red-800 px-4 py-2 rounded-lg bg-black/20 animate-flash-glow">
+              Keep Progressing
+            </h3>
+          </div>
           <img 
             src="/lovable-uploads/7bcebda3-6793-4d6a-9e98-73ba99fcf0a8.png"
             alt="Person hiking with gear"
