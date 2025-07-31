@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      notifications: {
+        Row: {
+          created_at: string
+          dismissed_at: string | null
+          id: string
+          is_read: boolean | null
+          message: string
+          notification_type: string
+          scheduled_for: string
+          sent_at: string | null
+          task_id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          dismissed_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message: string
+          notification_type?: string
+          scheduled_for: string
+          sent_at?: string | null
+          task_id: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          dismissed_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message?: string
+          notification_type?: string
+          scheduled_for?: string
+          sent_at?: string | null
+          task_id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       reminders: {
         Row: {
           created_at: string | null
@@ -58,12 +100,17 @@ export type Database = {
       tasks: {
         Row: {
           created_at: string | null
+          days_of_week: number[] | null
           description: string | null
           duration_days: number
           end_date: string | null
           id: string
+          is_recurring: boolean | null
+          next_reminder_date: string | null
           priority: number
+          recurrence_pattern: string | null
           reminder_frequency: number
+          reminder_time: string | null
           start_date: string | null
           title: string
           updated_at: string | null
@@ -71,12 +118,17 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          days_of_week?: number[] | null
           description?: string | null
           duration_days: number
           end_date?: string | null
           id?: string
+          is_recurring?: boolean | null
+          next_reminder_date?: string | null
           priority: number
+          recurrence_pattern?: string | null
           reminder_frequency: number
+          reminder_time?: string | null
           start_date?: string | null
           title: string
           updated_at?: string | null
@@ -84,12 +136,17 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          days_of_week?: number[] | null
           description?: string | null
           duration_days?: number
           end_date?: string | null
           id?: string
+          is_recurring?: boolean | null
+          next_reminder_date?: string | null
           priority?: number
+          recurrence_pattern?: string | null
           reminder_frequency?: number
+          reminder_time?: string | null
           start_date?: string | null
           title?: string
           updated_at?: string | null
@@ -131,7 +188,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      calculate_next_reminder: {
+        Args: {
+          p_task_id: string
+          p_is_recurring: boolean
+          p_recurrence_pattern: string
+          p_days_of_week: number[]
+          p_reminder_time: string
+          p_current_date?: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
