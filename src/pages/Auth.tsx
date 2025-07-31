@@ -87,9 +87,9 @@ export default function Auth() {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#B19CD9' }}>
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b bg-white/10">
+      <header className="fixed top-0 left-0 right-0 z-50 border-b" style={{ backgroundColor: '#B19CD9' }}>
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <Link to="/" className="text-xl font-bold text-black hover:text-black/70 transition-colors">
             Progress Pulse
@@ -102,7 +102,7 @@ export default function Auth() {
         </div>
       </header>
 
-      <div className="py-12 px-4 sm:px-6 lg:px-8">
+      <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
         {/* Centered Main Title and Subtitle */}
       <div className="text-center mb-12">
         <h1 className="text-6xl font-bold text-black mb-6">
@@ -158,9 +158,26 @@ export default function Auth() {
 
       {/* Text Section */}
       <div className="max-w-4xl mx-auto text-center mb-16">
-        <h2 className="text-3xl font-bold text-black leading-relaxed">
-          How does it work? Simple. Give me your tasks to complete, how long each task will take, and their deadlines. I'll create a plan for completing each task with scheduled reminders, so you don't burn out or feel like you forgot to do something!
-        </h2>
+        <div className="mb-8">
+          <h2 className="text-4xl font-bold text-baby-blue mb-4">
+            Who is this used for? Think anyone!
+          </h2>
+          <div className="text-2xl font-bold text-black space-y-2">
+            <p>• Yourself</p>
+            <p>• Friends and Family</p>
+            <p>• Employers</p>
+            <p>• Businesses</p>
+          </div>
+        </div>
+        
+        <div>
+          <h2 className="text-4xl font-bold text-baby-blue mb-4">
+            How does it work?
+          </h2>
+          <p className="text-2xl text-black leading-relaxed">
+            Simple. Give me your tasks to complete, how long each task will take, and their deadlines. I'll create a plan for completing each task with scheduled reminders, so you don't burn out or feel like you forgot to do something!
+          </p>
+        </div>
       </div>
 
       {/* Authentication Section with Checklist */}
