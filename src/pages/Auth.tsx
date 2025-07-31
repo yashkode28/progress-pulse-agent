@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { useNavigate, Link } from "react-router-dom";
 import { ChecklistAnimation } from "@/components/ChecklistAnimation";
+import { Bell } from "lucide-react";
 
 export default function Auth() {
   const [loading, setLoading] = useState(false);
@@ -94,11 +95,20 @@ export default function Auth() {
           <Link to="/" className="text-xl font-bold text-black hover:text-black/70 transition-colors">
             Progress Pulse
           </Link>
-          <Link to="/" className="text-black hover:text-black/70 transition-colors">
-            <Button variant="outline" size="sm" className="border-black/20 text-black hover:bg-black/10">
-              Your Tasks
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="bg-yellow-500 border-yellow-600 text-black hover:bg-yellow-600 hover:border-yellow-700"
+            >
+              <Bell size={16} />
             </Button>
-          </Link>
+            <Link to="/" className="text-black hover:text-black/70 transition-colors">
+              <Button variant="outline" size="sm" className="border-black/20 text-black hover:bg-black/10">
+                Your Tasks
+              </Button>
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -116,7 +126,7 @@ export default function Auth() {
       </div>
 
       {/* Images Section */}
-      <div className="max-w-7xl mx-auto flex items-end justify-center gap-12 mb-8 relative">
+      <div className="max-w-7xl mx-auto flex items-end justify-center gap-12 relative" style={{ marginBottom: '150px' }}>
         {/* Left Image - Pulse AI Notifications */}
         <div className="flex-shrink-0 -translate-x-8">
           <img 
@@ -126,19 +136,8 @@ export default function Auth() {
           />
         </div>
 
-        {/* Middle Image - Athlete/Hiker with animated text */}
-        <div className="flex-shrink-0 flex flex-col items-center">
-          {/* Animated "Keep Progressing" text */}
-          <div className="mb-4">
-            <h3 
-              className="text-5xl font-bold text-yellow-400 animate-flash-glow"
-              style={{
-                WebkitTextStroke: '2px #8B0000'
-              } as React.CSSProperties}
-            >
-              Keep Progressing
-            </h3>
-          </div>
+        {/* Middle Image - Athlete/Hiker */}
+        <div className="flex-shrink-0">
           <img 
             src="/lovable-uploads/7bcebda3-6793-4d6a-9e98-73ba99fcf0a8.png"
             alt="Person hiking with gear"
@@ -157,8 +156,8 @@ export default function Auth() {
       </div>
 
       {/* Text Section */}
-      <div className="max-w-4xl mx-auto text-center mb-16">
-        <div className="mb-8">
+      <div className="max-w-4xl mx-auto text-center" style={{ marginBottom: '150px' }}>
+        <div style={{ marginBottom: '150px' }}>
           <h2 className="text-4xl font-bold text-baby-blue mb-4">
             Who is this used for? Think anyone!
           </h2>
@@ -178,6 +177,23 @@ export default function Auth() {
             Simple. Give me your tasks to complete, how long each task will take, and their deadlines. I'll create a plan for completing each task with scheduled reminders, so you don't burn out or feel like you forgot to do something!
           </p>
         </div>
+      </div>
+
+      {/* Keep Progressing Animation */}
+      <div className="text-center" style={{ marginBottom: '150px' }}>
+        <div className="mb-4">
+          <h3 
+            className="text-5xl font-bold text-yellow-400 animate-flash-glow"
+            style={{
+              WebkitTextStroke: '2px #8B0000'
+            } as React.CSSProperties}
+          >
+            Keep Progressing
+          </h3>
+        </div>
+        <p className="text-2xl text-black font-bold">
+          Sign up today and crush your goals with Pulse AI!
+        </p>
       </div>
 
       {/* Authentication Section with Checklist */}
