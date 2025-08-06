@@ -3,20 +3,65 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Clock, AlertCircle, CheckCircle } from "lucide-react";
+import { Clock, AlertCircle, CheckCircle, Target, Zap, RefreshCw } from "lucide-react";
 import { Task } from "@/types/task";
 import { calculateProgress, formatRemainingTime, getNextReminder } from "@/utils/taskUtils";
 
 interface TaskCardProps {
   task: Task;
   onDelete: (id: string) => void;
+  onUpdateProgress: (taskId: string, progressMade: string, progressToGo: string) => void;
 }
 
-export function TaskCard({ task, onDelete }: TaskCardProps) {
+export function TaskCard({ task, onDelete, onUpdateProgress }: TaskCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const [isUpdatingProgress, setIsUpdatingProgress] = useState(false);
   const progress = calculateProgress(task);
   const nextReminder = getNextReminder(task);
   const remainingTime = formatRemainingTime(task);
+
+  const handleGenerateProgress = async () => {
+    setIsUpdatingProgress(true);
+    try {
+      // Simulate AI progress generation - will be replaced with actual AI call
+      setTimeout(() => {
+        if (task.isRecurring) {
+          const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+          onUpdateProgress(
+            task.id,
+            `Task completed consistently. Today is ${today}.`,
+            `Continue your routine. Next session scheduled soon.`
+          );
+        } else {
+          const elapsed = Math.floor((Date.now() - task.createdAt.getTime()) / (1000 * 60 * 60 * 24));
+          const remaining = Math.max(0, task.durationDays - elapsed);
+          onUpdateProgress(
+            task.id,
+            `You've been working on this for ${elapsed} days with steady progress.`,
+            `${remaining} days remaining. Focus on completing the final steps.`
+          );
+        }
+        setIsUpdatingProgress(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Error generating progress:", error);
+      setIsUpdatingProgress(false);
+    }
+  };
+
+  const formatTime = (timeString?: string) => {
+    if (!timeString) return null;
+    return new Date(`1970-01-01T${timeString}`).toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+  };
+
+  const formatDays = (days?: number[]) => {
+    if (!days || days.length === 0) return null;
+    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    return days.map(d => dayNames[d - 1]).join(', ');
+  };
 
   return (
     <Card className="w-full transition-all duration-300 hover:shadow-md">
@@ -34,7 +79,10 @@ export function TaskCard({ task, onDelete }: TaskCardProps) {
           </Button>
         </div>
         <CardDescription>
-          Due in {remainingTime}
+          {task.isRecurring 
+            ? `Recurring • ${formatDays(task.daysOfWeek) || 'Daily'}`
+            : `Due in ${remainingTime}`
+          }
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -46,24 +94,43 @@ export function TaskCard({ task, onDelete }: TaskCardProps) {
           <Progress value={progress} className="h-2" />
           
           <div className="flex flex-col gap-2 mt-3">
-            <div className="flex items-center gap-2 text-sm">
-              <Clock className="h-4 w-4 text-muted-foreground" />
-              <span>Reminders every {task.reminderFrequency} days</span>
-            </div>
-            
-            <div className="flex items-center gap-2 text-sm">
-              {progress < 100 ? (
-                <>
-                  <AlertCircle className="h-4 w-4 text-primary" />
-                  <span>Next reminder: {nextReminder}</span>
-                </>
-              ) : (
-                <>
-                  <CheckCircle className="h-4 w-4 text-green-500" />
-                  <span>Task completed!</span>
-                </>
-              )}
-            </div>
+            {task.isRecurring ? (
+              <>
+                {formatTime(task.completionTime) && (
+                  <div className="flex items-center gap-2 text-sm">
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                    <span>Complete at {formatTime(task.completionTime)}</span>
+                  </div>
+                )}
+                {formatTime(task.reminderTime) && (
+                  <div className="flex items-center gap-2 text-sm">
+                    <AlertCircle className="h-4 w-4 text-primary" />
+                    <span>Remind at {formatTime(task.reminderTime)}</span>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <div className="flex items-center gap-2 text-sm">
+                  <Clock className="h-4 w-4 text-muted-foreground" />
+                  <span>Reminders every {task.reminderFrequency} days</span>
+                </div>
+                
+                <div className="flex items-center gap-2 text-sm">
+                  {progress < 100 ? (
+                    <>
+                      <AlertCircle className="h-4 w-4 text-primary" />
+                      <span>Next reminder: {nextReminder}</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <span>Task completed!</span>
+                    </>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </CardContent>
@@ -79,8 +146,56 @@ export function TaskCard({ task, onDelete }: TaskCardProps) {
       </CardFooter>
       
       {expanded && (
-        <div className="px-6 pb-4 pt-0">
-          <p className="text-sm text-muted-foreground">{task.description}</p>
+        <div className="px-6 pb-4 pt-0 space-y-4">
+          <div>
+            <p className="text-sm text-muted-foreground mb-3">{task.description}</p>
+          </div>
+          
+          <div className="grid grid-cols-1 gap-3">
+            {task.progressMade && (
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Target className="w-4 h-4 text-green-600" />
+                  <span className="text-sm font-medium">Progress Made</span>
+                </div>
+                <p className="text-xs text-muted-foreground bg-green-50 p-2 rounded border">
+                  {task.progressMade}
+                </p>
+              </div>
+            )}
+            
+            {task.progressToGo && (
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-blue-600" />
+                  <span className="text-sm font-medium">Progress To Go</span>
+                </div>
+                <p className="text-xs text-muted-foreground bg-blue-50 p-2 rounded border">
+                  {task.progressToGo}
+                </p>
+              </div>
+            )}
+            
+            <Button 
+              onClick={handleGenerateProgress}
+              disabled={isUpdatingProgress}
+              size="sm"
+              variant="outline"
+              className="w-full"
+            >
+              {isUpdatingProgress ? (
+                <>
+                  <RefreshCw className="w-3 h-3 mr-2 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Zap className="w-3 h-3 mr-2" />
+                  Update Progress
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       )}
     </Card>

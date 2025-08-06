@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
-import { TaskForm } from "@/components/TaskForm";
+import { TaskFormEnhanced } from "@/components/TaskFormEnhanced";
 import { TaskList } from "@/components/TaskList";
 import { ReminderBanner } from "@/components/ReminderBanner";
 import { Header } from "@/components/Header";
@@ -45,6 +45,14 @@ export function Dashboard() {
     setTasks(tasks.filter((task) => task.id !== taskId));
     toast.success("Task deleted successfully");
   };
+
+  const handleUpdateProgress = (taskId: string, progressMade: string, progressToGo: string) => {
+    setTasks(tasks.map(task => 
+      task.id === taskId 
+        ? { ...task, progressMade, progressToGo }
+        : task
+    ));
+  };
   
   return (
     <div className="min-h-screen bg-gray-50">
@@ -70,7 +78,7 @@ export function Dashboard() {
               <DialogHeader>
                 <DialogTitle>Create a new task</DialogTitle>
               </DialogHeader>
-              <TaskForm 
+              <TaskFormEnhanced 
                 onSubmit={handleAddTask} 
                 onCancel={() => setIsDialogOpen(false)} 
               />
@@ -80,7 +88,7 @@ export function Dashboard() {
         
         <ReminderBanner tasks={tasks} />
         
-        <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
+        <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} onUpdateProgress={handleUpdateProgress} />
       </div>
     </div>
   );

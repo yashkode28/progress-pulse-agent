@@ -5,9 +5,10 @@ import { TaskCard } from "./TaskCard";
 interface TaskListProps {
   tasks: Task[];
   onDeleteTask: (id: string) => void;
+  onUpdateProgress: (taskId: string, progressMade: string, progressToGo: string) => void;
 }
 
-export function TaskList({ tasks, onDeleteTask }: TaskListProps) {
+export function TaskList({ tasks, onDeleteTask, onUpdateProgress }: TaskListProps) {
   if (tasks.length === 0) {
     return (
       <div className="text-center py-12">
@@ -20,7 +21,12 @@ export function TaskList({ tasks, onDeleteTask }: TaskListProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} onDelete={onDeleteTask} />
+        <TaskCard 
+          key={task.id} 
+          task={task} 
+          onDelete={onDeleteTask} 
+          onUpdateProgress={onUpdateProgress}
+        />
       ))}
     </div>
   );
