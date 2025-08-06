@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -23,28 +24,38 @@ export function TaskCard({ task, onDelete, onUpdateProgress }: TaskCardProps) {
   const handleGenerateProgress = async () => {
     setIsUpdatingProgress(true);
     try {
-      // Simulate AI progress generation - will be replaced with actual AI call
-      setTimeout(() => {
-        if (task.isRecurring) {
-          const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-          onUpdateProgress(
-            task.id,
-            `Task completed consistently. Today is ${today}.`,
-            `Continue your routine. Next session scheduled soon.`
-          );
-        } else {
-          const elapsed = Math.floor((Date.now() - task.createdAt.getTime()) / (1000 * 60 * 60 * 24));
-          const remaining = Math.max(0, task.durationDays - elapsed);
-          onUpdateProgress(
-            task.id,
-            `You've been working on this for ${elapsed} days with steady progress.`,
-            `${remaining} days remaining. Focus on completing the final steps.`
-          );
-        }
-        setIsUpdatingProgress(false);
-      }, 2000);
+      const { data, error } = await supabase.functions.invoke('analyze-task-progress', {
+        body: { task }
+      });
+
+      if (error) {
+        console.error('Error calling progress analysis:', error);
+        throw new Error(error.message);
+      }
+
+      const { progressMade, progressToGo } = data;
+      onUpdateProgress(task.id, progressMade, progressToGo);
+      
     } catch (error) {
       console.error("Error generating progress:", error);
+      // Fallback to basic progress update
+      if (task.isRecurring) {
+        const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
+        onUpdateProgress(
+          task.id,
+          `Task tracked consistently. Today is ${today}.`,
+          `Continue your routine. Stay consistent with your schedule.`
+        );
+      } else {
+        const elapsed = Math.floor((Date.now() - task.createdAt.getTime()) / (1000 * 60 * 60 * 24));
+        const remaining = Math.max(0, task.durationDays - elapsed);
+        onUpdateProgress(
+          task.id,
+          `Working on this for ${elapsed} days with steady progress.`,
+          `${remaining} days remaining. Focus on key deliverables.`
+        );
+      }
+    } finally {
       setIsUpdatingProgress(false);
     }
   };
