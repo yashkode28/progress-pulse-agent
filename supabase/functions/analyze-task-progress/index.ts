@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { task } = await req.json();
+    const { task, userUpdate } = await req.json();
     
     if (!task) {
       throw new Error('Task data is required');

@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Clock, AlertCircle, CheckCircle, Target, Zap, RefreshCw } from "lucide-react";
 import { Task } from "@/types/task";
 import { calculateProgress, formatRemainingTime, getNextReminder } from "@/utils/taskUtils";
+import { UpdateProgressDialog } from "./UpdateProgressDialog";
 
 interface TaskCardProps {
   task: Task;
@@ -17,6 +18,7 @@ interface TaskCardProps {
 export function TaskCard({ task, onDelete, onUpdateProgress }: TaskCardProps) {
   const [expanded, setExpanded] = useState(false);
   const [isUpdatingProgress, setIsUpdatingProgress] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const progress = calculateProgress(task);
   const nextReminder = getNextReminder(task);
   const remainingTime = formatRemainingTime(task);
@@ -215,6 +217,13 @@ export function TaskCard({ task, onDelete, onUpdateProgress }: TaskCardProps) {
           </div>
         </div>
       )}
+    <UpdateProgressDialog
+      open={isDialogOpen}
+      onOpenChange={setIsDialogOpen}
+      task={task}
+      onUpdate={(pm, ptg) => onUpdateProgress(task.id, pm, ptg)}
+      onLoadingChange={setIsUpdatingProgress}
+    />
     </Card>
   );
 }
