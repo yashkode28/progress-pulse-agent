@@ -31,18 +31,21 @@ const formSchema = z.object({
     message: "Description must not exceed 500 characters."
   }).optional(),
   duration: z.coerce.number().min(1, {
-    message: "Duration must be at least 1 day."
+    message: "Duration must be at least 1",
   }).max(365, {
-    message: "Duration cannot exceed 365 days."
+    message: "Duration cannot exceed 365 days.",
   }),
+  durationUnit: z.enum(['days', 'weeks', 'months']).default('days'),
   reminderFrequency: z.coerce.number().min(1, {
-    message: "Reminder frequency must be at least 1 day."
-  }).max(30, {
-    message: "Reminder frequency cannot exceed 30 days."
+    message: "Reminder frequency must be at least 1",
+  }).max(365, {
+    message: "Reminder frequency cannot exceed 365 days.",
   }),
+  reminderUnit: z.enum(['days', 'weeks', 'months']).default('days'),
   isRecurring: z.boolean().default(false),
   recurrencePattern: z.enum(['daily', 'weekly']).optional(),
   daysOfWeek: z.array(z.number()).optional(),
+  reminderDaysOfWeek: z.array(z.number()).optional(),
   reminderTime: z.string().optional(),
   completionTime: z.string().optional(),
 });
@@ -54,21 +57,24 @@ interface TaskFormEnhancedProps {
 
 export function TaskFormEnhanced({ onSubmit, onCancel }: TaskFormEnhancedProps) {
   const [selectedDays, setSelectedDays] = useState<number[]>([]);
-  
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      duration: 14,
-      reminderFrequency: 2,
-      isRecurring: false,
-      recurrencePattern: 'weekly',
-      daysOfWeek: [],
-      reminderTime: "",
-      completionTime: "",
-    },
-  });
+  const [selectedReminderDays, setSelectedReminderDays] = useState<number[]>([]);
+const form = useForm<z.infer<typeof formSchema>>({
+  resolver: zodResolver(formSchema),
+  defaultValues: {
+    title: "",
+    description: "",
+    duration: 14,
+    durationUnit: 'days',
+    reminderFrequency: 2,
+    reminderUnit: 'days',
+    isRecurring: false,
+    recurrencePattern: 'weekly',
+    daysOfWeek: [],
+    reminderDaysOfWeek: [],
+    reminderTime: "",
+    completionTime: "",
+  },
+});
 
   const isRecurring = form.watch("isRecurring");
 
@@ -82,29 +88,47 @@ export function TaskFormEnhanced({ onSubmit, onCancel }: TaskFormEnhancedProps) 
     { id: 7, label: "Sun", name: "Sunday" },
   ];
 
-  const handleDayToggle = (dayId: number) => {
-    const newSelectedDays = selectedDays.includes(dayId)
-      ? selectedDays.filter(d => d !== dayId)
-      : [...selectedDays, dayId];
-    
-    setSelectedDays(newSelectedDays);
-    form.setValue("daysOfWeek", newSelectedDays);
-  };
+const handleDayToggle = (dayId: number) => {
+  const newSelectedDays = selectedDays.includes(dayId)
+    ? selectedDays.filter(d => d !== dayId)
+    : [...selectedDays, dayId];
+  setSelectedDays(newSelectedDays);
+  form.setValue("daysOfWeek", newSelectedDays);
+};
 
+const handleReminderDayToggle = (dayId: number) => {
+  const newSelected = selectedReminderDays.includes(dayId)
+    ? selectedReminderDays.filter(d => d !== dayId)
+    : [...selectedReminderDays, dayId];
+  setSelectedReminderDays(newSelected);
+  form.setValue("reminderDaysOfWeek", newSelected);
+};
   function handleSubmit(values: z.infer<typeof formSchema>) {
+    const toDays = (value: number, unit: 'days' | 'weeks' | 'months') => {
+      if (unit === 'weeks') return value * 7;
+      if (unit === 'months') return value * 30; // simple approximation
+      return value;
+    };
+
+    const durationDays = toDays(values.duration, values.durationUnit);
+    const reminderDays = toDays(values.reminderFrequency, values.reminderUnit);
+
     const newTask: Task = {
       id: uuidv4(),
       title: values.title,
       description: values.description || "",
       createdAt: new Date(),
-      durationDays: values.duration,
-      reminderFrequency: values.reminderFrequency,
+      durationDays: durationDays,
+      reminderFrequency: reminderDays,
       completed: false,
       isRecurring: values.isRecurring,
       recurrencePattern: values.isRecurring ? values.recurrencePattern : undefined,
       daysOfWeek: values.isRecurring ? values.daysOfWeek : undefined,
       reminderTime: values.reminderTime || undefined,
       completionTime: values.completionTime || undefined,
+      durationUnit: values.durationUnit,
+      reminderUnit: values.reminderUnit,
+      reminderDaysOfWeek: values.reminderDaysOfWeek,
     };
     
     onSubmit(newTask);
@@ -262,6 +286,27 @@ export function TaskFormEnhanced({ onSubmit, onCancel }: TaskFormEnhancedProps) 
             )}
           />
         </div>
+
+        <div className="mt-2">
+          <FormLabel>Reminder Days of Week (optional)</FormLabel>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {daysOfWeek.map((day) => (
+              <div key={day.id} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`reminder-day-${day.id}`}
+                  checked={selectedReminderDays.includes(day.id)}
+                  onCheckedChange={() => handleReminderDayToggle(day.id)}
+                />
+                <label htmlFor={`reminder-day-${day.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                  {day.label}
+                </label>
+              </div>
+            ))}
+          </div>
+          <FormDescription>
+            Choose specific weekdays for reminders. If none are selected, reminders follow your frequency.
+          </FormDescription>
+        </div>
         
         {!isRecurring && (
           <div className="grid grid-cols-2 gap-4">
@@ -270,12 +315,22 @@ export function TaskFormEnhanced({ onSubmit, onCancel }: TaskFormEnhancedProps) 
               name="duration"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Duration (days)</FormLabel>
-                  <FormControl>
-                    <Input type="number" min={1} max={365} {...field} />
-                  </FormControl>
+                  <FormLabel>Duration</FormLabel>
+                  <div className="flex gap-2">
+                    <FormControl>
+                      <Input type="number" min={1} max={365} {...field} />
+                    </FormControl>
+                    <select 
+                      {...form.register('durationUnit')}
+                      className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                    >
+                      <option value="days">Days</option>
+                      <option value="weeks">Weeks</option>
+                      <option value="months">Months</option>
+                    </select>
+                  </div>
                   <FormDescription>
-                    How many days to complete?
+                    How long until due
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -288,11 +343,21 @@ export function TaskFormEnhanced({ onSubmit, onCancel }: TaskFormEnhancedProps) 
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Reminder Frequency</FormLabel>
-                  <FormControl>
-                    <Input type="number" min={1} max={30} {...field} />
-                  </FormControl>
+                  <div className="flex gap-2">
+                    <FormControl>
+                      <Input type="number" min={1} max={365} {...field} />
+                    </FormControl>
+                    <select 
+                      {...form.register('reminderUnit')}
+                      className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+                    >
+                      <option value="days">Days</option>
+                      <option value="weeks">Weeks</option>
+                      <option value="months">Months</option>
+                    </select>
+                  </div>
                   <FormDescription>
-                    Remind every X days
+                    Remind every X time units
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

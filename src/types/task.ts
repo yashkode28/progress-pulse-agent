@@ -15,4 +15,9 @@ export interface Task {
   nextReminderDate?: Date;
   progressMade?: string;
   progressToGo?: string;
+  // New optional fields for enhanced scheduling and agent support
+  durationUnit?: 'days' | 'weeks' | 'months';
+  reminderUnit?: 'days' | 'weeks' | 'months';
+  reminderDaysOfWeek?: number[]; // Days to receive reminders (1=Mon ... 7=Sun)
+  steps?: { id: string; text: string; completed: boolean; completedAt?: Date }[];
 }

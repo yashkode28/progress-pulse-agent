@@ -142,7 +142,13 @@ export function TaskCard({ task, onDelete, onUpdateProgress }: TaskCardProps) {
                 </div>
               </>
             )}
-          </div>
+            {(task.progressMade || task.progressToGo) && (
+              <div className="mt-2 text-xs text-muted-foreground space-y-1">
+                {task.progressMade && <p>AI update: {task.progressMade}</p>}
+                {task.progressToGo && <p>Next: {task.progressToGo}</p>}
+              </div>
+            )}
+           </div>
         </div>
       </CardContent>
       <CardFooter className="pt-1">

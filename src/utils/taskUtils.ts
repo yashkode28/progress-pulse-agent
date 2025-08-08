@@ -19,12 +19,29 @@ export function getNextReminder(task: Task): string {
   if (task.completed) return "No reminders";
   
   const today = new Date();
+
+  // If specific weekdays are selected for reminders, find the next occurrence
+  if (task.reminderDaysOfWeek && task.reminderDaysOfWeek.length > 0) {
+    const currentDOW = today.getDay() === 0 ? 7 : today.getDay(); // 1-7 (Mon-Sun)
+    const sorted = [...task.reminderDaysOfWeek].sort((a, b) => a - b);
+    // Find next day this week, otherwise roll over to next week
+    let nextDay = sorted.find((d) => d >= currentDOW);
+    let daysAhead = 0;
+    if (nextDay === undefined) {
+      nextDay = sorted[0];
+      daysAhead = 7 - currentDOW + nextDay;
+    } else {
+      daysAhead = nextDay - currentDOW;
+    }
+    const nextReminderDate = addDays(today, daysAhead === 0 ? 7 : daysAhead);
+    return format(nextReminderDate, "MMM d, yyyy");
+  }
+  
+  // Default: based on reminderFrequency in days
   const creationDate = new Date(task.createdAt);
   const daysSinceCreation = differenceInDays(today, creationDate);
-  
   const daysSinceLastReminder = daysSinceCreation % task.reminderFrequency;
   const daysUntilNextReminder = task.reminderFrequency - daysSinceLastReminder;
-  
   const nextReminderDate = addDays(today, daysUntilNextReminder);
   return format(nextReminderDate, "MMM d, yyyy");
 }
