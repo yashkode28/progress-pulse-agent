@@ -136,11 +136,11 @@ export default function Auth() {
           />
         </div>
 
-        {/* Middle Image - Athlete/Hiker */}
+        {/* Middle Image - Business Analytics */}
         <div className="flex-shrink-0">
           <img 
-            src="/lovable-uploads/7bcebda3-6793-4d6a-9e98-73ba99fcf0a8.png"
-            alt="Person hiking with gear"
+            src="/lovable-uploads/ddb28021-1eb1-4576-b9cc-c75daeec7d52.png"
+            alt="Business presentation with analytics dashboard"
             className="rounded-lg shadow-lg w-80 h-auto object-cover"
           />
         </div>
